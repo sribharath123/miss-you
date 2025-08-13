@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Missing You ❤️</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        text-align: center;
+        background: linear-gradient(90deg, #ffdde1, #fc6076, #ff9a9e, #fad0c4);
+        background-size:1000%;
+        animation: gradientShift 15s ease infinite;
+        color: #fff8f8;
+    }
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    .login-box, #greeting-section, .memory-container {
+        max-width: 750px;
+        margin: auto;
+    }
+    .login-box {
+        margin-top: 10%;
+        background: rgba(255, 255, 255, 0.15);
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+    }
+    .error-msg {
+        color: #ffcccc;
+        background: rgba(255, 0, 0, 0.2);
+        border: 1px dashed red;
+        padding: 5px;
+        border-radius: 5px;
+        display: none;
+        font-size: 0.9rem;
+    }
+    .typing {
+        font-size: 2rem;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 3px solid white;
+        display: inline-block;
+        animation: typing 4s steps(40, end), blink 0.5s step-end infinite alternate;
+        font-family: 'Dancing Script', cursive;
+    }
+    @keyframes typing {
+        from { width: 0; }
+        to { width: 100%; }
+    }
+    @keyframes blink {
+        50% { border-color: transparent; }
+    }
+    .hearts {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        pointer-events: none;
+        z-index: -1;
+    }
+    .heart {
+        position: absolute;
+        color: rgba(255,255,255,0.8);
+        font-size: 1.8rem;
+        animation: float 5s linear infinite;
+    }
+    @keyframes float {
+        0% { transform: translateY(100vh) scale(1); opacity: 1; }
+        100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+    }
+    #greeting-section {
+        margin-top: 10%;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+        border: 3px solid rgba(255, 255, 255, 0.5);
+    }
+    #greeting-section h4 {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #fff0f0;
+    }
+    .memory-container {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        margin-top: 30px;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 1.5s ease forwards;
+    }
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .memory-card {
+        position: relative;
+        border-radius: 15px;
+        overflow: hidden;
+        margin: 10px;
+        background: rgba(255,255,255,0.12);
+        transition: transform 0.3s;
+    }
+    .memory-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(255,255,255,0.4);
+    }
+    .memory-card img {
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
+    }
+    .memory-card p {
+        background: rgba(0,0,0,0.4);
+        padding: 10px;
+        margin: 0;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        font-size: 0.8rem;
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+    }
+    #last-section {
+        background: linear-gradient(-45deg, #ffdde1, #fc6076, #ff9a9e, #fad0c4);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+        color: #ff4d6d;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        font-size: 2.5rem;
+        font-weight: bold;
+    }
+    .final-text {
+        opacity: 0;
+        animation: fadeIn 2s ease-in forwards;
+    }
+    @keyframes fadeIn {
+        to { opacity: 1; }
+    }
+</style>
+</head>
+<body>
+
+<div id="login-section" class="container text-center">
+    <div class="login-box">
+        <h2>Enter Your Name ❤️</h2>
+        <input type="text" id="nameInput" class="form-control mb-2 text-center mt-md-3 " placeholder="Your Name" style="width: 60%;margin-left: 18%;">
+        <div id="errorMsg" class="error-msg"></div>
+        <button class="btn btn-light mt-md-3 " onclick="checkName()">Login</button>
+    </div>
+</div>
+
+<div id="greeting-section" style="display:none;">
+    <div class="typing mb-3">I miss you so much Nanna ❤️</div>
+    <h4>It’s been <span id="daysCounter"></span> days since we met last.</h4>
+    <h4>Every thought of you feels like a heartbeat waiting for your presence 💞</h4>
+    <div class="mt-4">
+       <h2>“Let’s hold hands and walk through last year’s precious memories 💕✨”</h2>
+       <button onclick="showMemories()" class="btn btn-warning mt-3 px-4 rounded-pill">OK</button>
+    </div>
+</div>
+
+<div id="memories-section" style="display:none;">
+    <div class="container memory-container">
+        <h3>This is the day I came to Hyderabad for you (Aug 4th)</h3>
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="memory-card">
+                    <img src="Snapchat-799843443.jpg" alt="">
+                    <p>Our little world, where every corner whispers our love ❤️</p>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="memory-card">
+                    <img src="Snapchat-227573281.jpg" alt="">
+                    <p>Panipuri under the stars — the perfect ending to our long walk 🌙✨</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container memory-container">
+        <h3>The day you came back to Vijayawada after a long time</h3>
+        <p>We spent the night in the bus stop waiting for the morning.</p>
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="memory-card">
+                    <img src="Snapchat-1553435193.jpg" alt="">
+                    <p style="font-size: 0.7rem;">The bus journey in the morning, where my world was sitting right beside me ❤️</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="memory-card">
+                    <img src="Snapchat-195040500.jpg" alt="">
+                    <p style="font-size: 0.7rem;">The next day at PVP Mall, when you made me try food I’d never eaten before ✨</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="memory-card">
+                    <img src="Snapchat-1814881976.jpg" alt="">
+                    <p>Do you remember this💖</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h2>Do you miss me nanna?❤️</h2>
+        <button onclick="goToLovePage()" class="btn btn-lg btn-danger rounded-pill px-5 mt-3 shadow mb-md-5 mb-sm-5">YES 💖</button>
+    </div>
+</div>
+
+<div id="last-section" style="display:none;">
+    <div class="final-text">Aww I luvv uhh babee🥺❤️</div>
+</div>
+
+<div class="hearts" id="hearts"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+<script>
+    function checkName() {
+        const nameInput = document.getElementById("nameInput").value.trim();
+        const errorMsg = document.getElementById("errorMsg");
+        const nameRegex = /^[A-Za-z\s]+$/;
+        errorMsg.style.display = "none";
+        errorMsg.textContent = "";
+        if (!nameRegex.test(nameInput) || nameInput.length < 2) {
+            errorMsg.textContent = "Please enter a valid name using alphabets only ❤️";
+            errorMsg.style.display = "block";
+            return;
+        }
+        document.getElementById("login-section").style.display = "none";
+        document.getElementById("greeting-section").style.display = "block";
+        startHearts();
+        startCounter();
+    }
+    function startCounter() {
+        const lastMeetDate = new Date("May 30, 2025");
+        const today = new Date();
+        const diffTime = Math.abs(today - lastMeetDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        document.getElementById("daysCounter").textContent = diffDays;
+    }
+    function startHearts() {
+        setInterval(() => {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+            heart.innerHTML = "❤";
+            document.getElementById("hearts").appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }, 300);
+    }
+    function showMemories() {
+        document.getElementById("greeting-section").style.display = "none";
+        document.getElementById("memories-section").style.display = "block";
+    }
+    function goToLovePage(){
+        document.getElementById("memories-section").style.display="none";
+        document.getElementById("last-section").style.display="flex";
+        launchConfetti();
+    }
+    function launchConfetti() {
+        var duration = 2 * 1000;
+        var end = Date.now() + duration;
+        (function frame() {
+            confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
+            confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
+            if (Date.now() < end) {
+                requestAnimationFrame(frame);
+            }
+        }());
+    }
+</script>
+</body>
+</html>
